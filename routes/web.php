@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,12 +13,20 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-// ROTTE per Autenticazione
-Auth::routes();
+// Autenticazione con annullamento registrazione
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// Rotte admin
+Route::middleware('auth')
+    ->namespace('Admin')
+    ->name('admin.')
+    ->prefix('admin')
+    ->group(function () {
+        Route::get('/', 'HomeController@index')->name('home');
+        Route::resource('posts', 'PostController');
+    });
+
+// Rotte pubbliche
+Route::get('{any?}', 'HomeController@index')->where('any', '.*')->name('home');
