@@ -11,7 +11,16 @@
     
     <div class="row my-3">
       <div class="col-12">
-        <h3>{{ $post->title }}</h3>
+        <h3 class="d-flex justify-content-between">
+          {{ $post->title }}
+          @if ($post->body) 
+            <a href="{{ route('admin.categories.show', $post->$category->id) }}" class="badge badge-info text-light">
+              {{ $post->category->name }}
+            </a>
+          @else
+            <span class="badge badge-secondary">N/B</span>
+          @endif
+        </h3>
         <p>{{ $post->body }}</p>
       </div>  
     </div>

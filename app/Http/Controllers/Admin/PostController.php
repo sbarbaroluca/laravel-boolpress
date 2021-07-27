@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Post;
+use App\Category;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
@@ -13,14 +14,16 @@ class PostController extends Controller
 {
     private $validation = [
         "title" => "required|max:255",
-        "body" => "required|max:65535"
+        "body" => "required|max:65535",
+        "category_id" => "nullable|exists:categories,id"
     ];
     private $validationMsg = [
         "required" => ":attribute is required!",
         "max" => ":sttribute cannot be much longer!"
     ];
 
-    private function createSlug($data) {
+    private function createSlug($data)
+     {
         $slug = Str::slug($data["title"], "-");
         $postExists = Post::where('slug', $slug)->first();
 
@@ -55,7 +58,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::all();
+
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -103,7 +108,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        $categories = Category::all();
+        return view('admin.posts.edit', compact('posts', 'categories'));
     }
 
     /**

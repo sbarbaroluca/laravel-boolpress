@@ -19,7 +19,8 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th>Title</th>      
+            <th>Title</th>
+            <th>Category</th> 
             <th>Slug</th> 
             <th colspan="3">Actions</th>
           </tr>
@@ -28,9 +29,14 @@
           @foreach ($posts as $post)    
           <tr>
             <td>{{ $post->id }}</td> 
-            <td>{{ $post->title }}</td>    
+            <td>{{ $post->title }}</td> 
+            <td>
+              @if ($post->category)
+                  {{ $post->category->name }}
+              @endif
+            </td>      
             <td>{{ $post->slug }}</td> 
-          </tr>
+            <td>
             <a class="btn btn-primary text-dark" href="{{ route('admin.posts.show', $post->id) }}">
               <i class="fas fa-search text-light"></i>
             </a>

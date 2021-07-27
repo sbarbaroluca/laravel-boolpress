@@ -27,6 +27,22 @@
           @enderror 
 
         </div>
+        <div>
+          <label for="category_id">Category</label>
+          <select class="from-control @error('category_id') is-invalid @enderror" name="category_id" id="category_id">
+            <option value="">-- Select Category --</option>
+            @foreach ($categories as $category)
+              <option
+                  value="{{ $category->id }}"
+                  {{ ($category->id == old('category_id')) ? 'selected' : '' }}>
+                  {{ $category->name }}
+              </option>
+            @endforeach
+          </select>
+          @error('category_id')
+            <small class="text-danger">{{ $message }}</small>
+          @enderror
+        </div>     
         <div class="d-flex justify-content-between align-items-center">
           <a class="btn btn-secondary text-light" href="{{ route('admin.posts.index') }}">
             <i class="fas fa-arrow-left"></i>
