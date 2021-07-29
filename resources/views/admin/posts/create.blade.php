@@ -18,7 +18,7 @@
           @enderror 
 
         </div>
-        <div>
+        <div class="mb-3">
           <label for="body">Body</label>
           <textarea class="from-control @error('body') is-invalid @enderror" id="body" name="body" placeholder="Add the body of your post..." rows="4">{{ old('description')}}</textarea>
 
@@ -27,7 +27,7 @@
           @enderror 
 
         </div>
-        <div>
+        <div class="mb-3">
           <label for="category_id">Category</label>
           <select class="from-control @error('category_id') is-invalid @enderror" name="category_id" id="category_id">
             <option value="">-- Select Category --</option>
@@ -43,6 +43,24 @@
             <small class="text-danger">{{ $message }}</small>
           @enderror
         </div>     
+
+        <div class="form-group">
+            <h6>Tags</h6>
+            @foreach ($tags as $tag)
+              <div class="form-check form-check-inline">
+                <input class="form-check-onput" name='tags[]' type="checkbox" value="{{ $tag->id }}" id="tag-{{$tag->id}}" {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
+                <label class="form-check-label" for="tag-{{ $tag->id }}">
+                  {{ $tag->name }}
+                </label>
+              </div>
+            @endforeach 
+            @error('tags')    
+                <small class="text-danger d-block">
+                  {{ $message }}
+                </small>
+            @enderror
+        </div>
+
         <div class="d-flex justify-content-between align-items-center">
           <a class="btn btn-secondary text-light" href="{{ route('admin.posts.index') }}">
             <i class="fas fa-arrow-left"></i>
