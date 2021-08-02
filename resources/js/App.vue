@@ -2,14 +2,7 @@
     <div>
       <Header />
       <main class="container">
-        <div class="row">
-          <Card v-for="post in posts" :key="post.id" :post="post" />
-        </div>
-        <Paginate
-          :current="current_page"
-          :last="last_page"
-          :getPaginate="getPosts"
-        />
+        <router-view></router-view>
       </main>
       <Footer />
     </div>      
@@ -17,23 +10,21 @@
 
 <script>
 import Header from "./components/Header";
-import Card from "./components/Card";
-import Paginate from "./components/Paginate";
 import Footer from "./components/Footer";
 
 export default {
   name: "App",
   components: {
     Header,
-    Card,
-    Paginate,
     Footer,
   },
   data() {
     return {
       posts: [],
+      categories: [],
       current_page: 1,
       last_page: 1,
+      num: 0
     };
   },
   methods: {
@@ -55,16 +46,30 @@ export default {
 
           this.posts.foreach((post) => {
             post.extract = this.truncateText(post.body, 150);
+            post.img = "https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80";
           });
-          // console.log(this.current_page);
         })
         .catch((err) => {
           console.log(err);
         });
     },
+    getCategories() {
+      axios.get("http://127.0.0.1:8000/api/categories")
+      .then(res => {
+        this.categories = res.data;
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    },
+    activePosts(n) {
+      this.num = n
+      this.getPosts(this.num);
+    }
   },
   created() {
     this.getPosts();
+    this.getCategories();
   },
 };
 </script>

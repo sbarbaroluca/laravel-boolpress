@@ -1,20 +1,41 @@
 <template>
-  <header class="bg-dark text-light py-3">
+  <header class="bg-dark text-light">
     <div class="container">
       <div class="d-flex justify-content-between align-items-center">
         <h1>My<span class="text-info text-bold">Blog</span> </h1>
         <nav class="d-flex align-items-center">
-          <ul class="d-flex text-uppercase list-unstyled m-0">
+          <ul 
+            class="d-flex  align-items-center text-uppercase list-unstyled m-0"
+          >
             <li>
-              <a class="text-decoration-none text-light" href="#">Home</a>
-            </li>  
-            <li class="ml-5">
-              <a class="text-decoration-none text-light" href="#">Blog</a>
-            </li>  
-            <li class="ml-5">
-              <a class="text-decoration-none text-light" href="#">About</a>
-            </li>  
-          </ul>
+              <router-link
+              class="text-decoration-none text-light"
+              :to="{ name: 'home' }"
+              >Home</router-link
+            >
+          </li>
+          <li class="ml-5">
+            <router-link
+              class="text-decoration-none text-light"
+              :to="{ name: 'blog' }"
+              >Blog</router-link
+            >
+          </li>
+          <li class="ml-5">
+            <router-link
+              class="text-decoration-none text-light"
+              :to="{ name: 'about' }"
+              >About</router-link
+            >
+          </li>
+          <li class="ml-5">
+            <a
+              class="text-decoration-none text-light btn btn-info"
+              href="http://127.0.0.1:8000/admin"
+              >Admin</a>
+            >
+          </li>
+          </ul>      
         </nav>
       </div>
     </div>
@@ -27,5 +48,19 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+header {
+  height: 50px;
+
+  li {
+    a {
+      display: inline-block;
+      padding: 5px 10px;
+      &.active,
+      &:hover {
+        background-color: #6cb2eb;
+      }
+    }
+  }
+}
 </style>

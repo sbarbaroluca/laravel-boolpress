@@ -1,28 +1,40 @@
 <template>
-  <div class="text-center my-5">
+  <div class="text-center">
     <button 
+      class="btn btn-info text-light"
+      @click="$emit('firstPage')"
+    >
+      <i class="fas fa-angle-double-left"></i>
+    </button>
+    <button
       class="btn btn-info"
-      @click="getPaginate(current - 1)"
+      @click="$emit('prev')"
       v-show="current > 1"
     >
       <i class="fas fa-caret-left text-light"></i>
     </button>
     <button
-      class="btn mx-2"
+      class="btn shadow-none font-weight-bold"
       v-for="num in last"
       :key="num"
-      :class="current == num ? 'btn-info' : 'btn-dark'"
-      @click="getPaginate(num)"   
+      :class="current == num ? 'text-info' : 'text-dark'"  
+      @click="$emit('active', num)"
     >
-      {{ num }}  
+      {{ num }}
     </button>
-    <button
+    <button 
       class="btn btn-info"
-      @click="gatPaginate(current + 1)"  
+      @click="$emit('next')"  
       v-show="current < last"
     >
       <i class="fas fa-caret-right text-light"></i>
     </button>
+    <button
+    class="btn btn-info text-light"
+    @click="$emit('lastPage')" 
+    >
+       <i class="fas fa-angle-double-right"></i>
+    </button>   
   </div>      
 </template>
 
@@ -31,13 +43,11 @@ export default {
   name: 'Paginate',
   props: {
       'current': Number,
-      'last': Number,
-      'getPaginate': Function
+      'last': Number
   }
 
 };
 </script>
 
 <style>
-
 </style>
